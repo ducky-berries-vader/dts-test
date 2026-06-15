@@ -28,11 +28,11 @@ export class LoginPage {
         await this._loginButton.click();
     }
 
-    async getSuccessMessage(): Promise<Locator> {
+    getSuccessMessage(): Locator {
         return this._page.locator('.flash.success');
     }
 
-    async getErrorMessage(): Promise<Locator> {
+    getErrorMessage(): Locator {
         return this._page.locator('.flash.error');
     }
 }

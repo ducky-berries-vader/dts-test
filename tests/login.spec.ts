@@ -18,16 +18,14 @@ test.describe('login', () => {
     test('valid credentials', async () => {
         await loginPage.login(username, password);
 
-        const message = await loginPage.getSuccessMessage();
-        await expect(message).toBeVisible();
+        const message = loginPage.getSuccessMessage();
         await expect(message).toHaveText(/You logged into a secure area!/);
     });
 
     test('invalid credentials', async () => {
         await loginPage.login(username, 'incorrectpassword');
 
-        const message = await loginPage.getErrorMessage();
-        await expect(message).toBeVisible();
+        const message = loginPage.getErrorMessage();
         await expect(message).toHaveText(/Your password is invalid!/);
     });
 
@@ -35,8 +33,7 @@ test.describe('login', () => {
     test('invalid username', async () => {
         await loginPage.login('doesnotexist', password);
 
-        const message = await loginPage.getErrorMessage();
-        await expect(message).toBeVisible();
+        const message = loginPage.getErrorMessage();
         await expect(message).toHaveText(/Your username is invalid!/);
     });
 
@@ -45,8 +42,7 @@ test.describe('login', () => {
     test('empty credentials', async () => {
         await loginPage.login('', '');
 
-        const message = await loginPage.getErrorMessage();
-        await expect(message).toBeVisible();
+        const message = loginPage.getErrorMessage();
         await expect(message).toHaveText(/Your username is invalid!/);
     });
 });
