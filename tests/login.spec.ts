@@ -8,43 +8,45 @@ const password = testCredentials.password;
 
 let loginPage: LoginPage;
 
-test.beforeEach(async ({ page }) => {
-    loginPage = new LoginPage(page);
+test.describe('login', () => {
+    test.beforeEach(async ({ page }) => {
+        loginPage = new LoginPage(page);
 
-    await loginPage.goto();
-});
+        await loginPage.goto();
+    });
 
-test('login with valid credentials', async () => {
-    await loginPage.login(username, password);
+    test('valid credentials', async () => {
+        await loginPage.login(username, password);
 
-    const message = await loginPage.getSuccessMessage();
-    await expect(message).toBeVisible();
-    await expect(message).toHaveText(/You logged into a secure area!/);
-});
+        const message = await loginPage.getSuccessMessage();
+        await expect(message).toBeVisible();
+        await expect(message).toHaveText(/You logged into a secure area!/);
+    });
 
-test('login with invalid credentials', async () => {
-    await loginPage.login(username, 'incorrectpassword');
+    test('invalid credentials', async () => {
+        await loginPage.login(username, 'incorrectpassword');
 
-    const message = await loginPage.getErrorMessage();
-    await expect(message).toBeVisible();
-    await expect(message).toHaveText(/Your password is invalid!/);
-});
+        const message = await loginPage.getErrorMessage();
+        await expect(message).toBeVisible();
+        await expect(message).toHaveText(/Your password is invalid!/);
+    });
 
-// Questionable functionality that tells the user whether a user exists.
-test('invalid username', async () => {
-    await loginPage.login('doesnotexist', password);
+    // Questionable functionality that tells the user whether a user exists.
+    test('invalid username', async () => {
+        await loginPage.login('doesnotexist', password);
 
-    const message = await loginPage.getErrorMessage();
-    await expect(message).toBeVisible();
-    await expect(message).toHaveText(/Your username is invalid!/);
-});
+        const message = await loginPage.getErrorMessage();
+        await expect(message).toBeVisible();
+        await expect(message).toHaveText(/Your username is invalid!/);
+    });
 
-// Again, questionable functionality. Empty credentials trigger the "Your username is invalid!" message.
-// An empty form shouldn't be sent to the server, and the user should be prompted to fill in the form before submission.
-test('login with empty credentials', async () => {
-    await loginPage.login('', '');
+    // Again, questionable functionality. Empty credentials trigger the "Your username is invalid!" message.
+    // An empty form shouldn't be sent to the server, and the user should be prompted to fill in the form before submission.
+    test('empty credentials', async () => {
+        await loginPage.login('', '');
 
-    const message = await loginPage.getErrorMessage();
-    await expect(message).toBeVisible();
-    await expect(message).toHaveText(/Your username is invalid!/);
+        const message = await loginPage.getErrorMessage();
+        await expect(message).toBeVisible();
+        await expect(message).toHaveText(/Your username is invalid!/);
+    });
 });
