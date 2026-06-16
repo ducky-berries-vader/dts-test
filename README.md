@@ -24,4 +24,4 @@ Playwright and TypeScript was a natural choice for me because of my familiarity 
 
 I chose to test the-internet.herokuapp.com due to it being easily accessible without needing to run anything locally.
 
-With more time I would test a login page that has a few more failure scenarios and logout functionality. Credentials have been added to a json file so that test suites could test across various environments. I would however in a production environment use some sort of secret manager so that credentials were not stored in plain test as this is a security concern.
+With more time I would test a login page that has a few more failure scenarios and logout functionality. Credentials have been added to a json file so that test suites can test various environments. I would however in a production environment use some sort of secret manager so that credentials were not stored in plain text as this is a security concern.
